@@ -3,6 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -16,6 +17,15 @@ import kotlin.math.sqrt
  *
  * Найти число корней квадратного уравнения ax^2 + bx + c = 0
  */
+//fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
+//    val discriminant = discriminant(a, b, c)
+//    return when {
+//        discriminant > 0.0 -> 2
+//        discriminant == 0.0 -> 1
+//        else -> 0
+//    }
+//}
+
 fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
     val discriminant = discriminant(a, b, c)
     return when {
@@ -30,13 +40,16 @@ fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
  *
  * Получить строковую нотацию для оценки по пятибалльной системе
  */
-fun gradeNotation(grade: Int): String = when (grade) {
-    5 -> "отлично"
-    4 -> "хорошо"
-    3 -> "удовлетворительно"
-    2 -> "неудовлетворительно"
-    else -> "несуществующая оценка $grade"
+fun gradeNotation(grade: Int): String {
+    return when (grade) {
+        5 -> "отлично"
+        4 -> "хорошо"
+        3 -> "удовлетворительно"
+        2 -> "неудовлетворительно"
+        else -> "несуществующая оценка $grade"
+    }
 }
+
 
 /**
  * Пример
@@ -68,7 +81,19 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+//10-20 лет и каждое 10
+//% 10 == 1 -> Год
+//% 10 == 2 || == 3 || == 4
+fun ageDescription(age: Int): String {
+    val word = when {
+        age % 100 in 10..20 -> "лет"
+        age % 10 == 0 -> "лет"
+        age % 10 == 1 -> "год"
+        age % 10 in 2..4 -> "года"
+        else -> "лет"
+    }
+    return "$age $word"
+}
 
 /**
  * Простая (2 балла)
@@ -81,7 +106,18 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val halfway = (((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2)
+    return when {
+        halfway < v1 * t1 -> halfway / v1
+        halfway < v1 * t1 + v2 * t2 -> ((halfway - v1 * t1) / v2) + t1
+        halfway < v1 * t1 + v2 * t2 + v3 * t3 -> ((halfway - (v1 * t1 + v2 * t2)) / v3) + t1 + t2
+        else -> 1488.00
+
+
+    }
+
+}
 
 /**
  * Простая (2 балла)
@@ -122,7 +158,49 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    fun sqr(x: Double): Double {
+        val d = x * x
+        return d
+    }
+
+    val max: Double =
+        when {
+            (a > b) and (a > c) -> a
+            (b > a) and (b > c) -> b
+            (c > b) and (c > a) -> c
+            else -> 1.0
+        }
+
+    val min1 =
+        when {
+            max == a -> b
+            max == b -> c
+            max == c -> a
+            else -> 1.0
+
+
+        }
+    val min2 =
+        when {
+            min1 == a -> b
+            min1 == b -> c
+            min1 == c -> a
+            else -> 1.0
+
+
+        }
+    return when {
+        sqr(max) < sqr(min1) + sqr(min2) -> 0
+        sqr(max) == sqr(min1) + sqr(min2) -> 1
+        (sqr(max) > (sqr(min1) + sqr(min2))) and ((min1 + min2) > max) -> {
+            2
+        }
+        else -> -1
+
+    }
+}
+
 
 /**
  * Средняя (3 балла)
@@ -132,4 +210,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        b == c || a == d -> 0
+        b < c || d < a -> -1
+        (a <= c) and (d <= b) -> d - c
+        (c <= a) and (b <= d) -> b - a
+        (b <= d) and (a <= c) -> b - c
+        (d <= b) and (c <= a) -> d - a
+        else -> 42
+    }
+}
