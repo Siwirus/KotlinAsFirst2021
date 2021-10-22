@@ -191,6 +191,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 
         }
     return when {
+        max > min1 + min2 -> -1
         sqr(max) < sqr(min1) + sqr(min2) -> 0
         sqr(max) == sqr(min1) + sqr(min2) -> 1
         (sqr(max) > (sqr(min1) + sqr(min2))) and ((min1 + min2) > max) -> {
