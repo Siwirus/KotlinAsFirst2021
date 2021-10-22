@@ -246,7 +246,7 @@ fun fibSequenceDigit(n: Int): Int {
         }
         return f
     }
-     var d = 0
+    var d = 0
     val x = Int.MAX_VALUE
     val z = 10.0
     var y = 1
