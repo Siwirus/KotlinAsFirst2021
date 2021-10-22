@@ -81,7 +81,7 @@ fun digitNumber(n: Int): Int {
         do {
             d += 1
             x /= 10
-        } while ((x / 10) > 0)
+        } while ((x / 10) != 0)
     return d + 1
 
 }
