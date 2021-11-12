@@ -121,7 +121,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
+
 
 /**
  * Простая (2 балла)
@@ -147,7 +148,15 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    val list = mutableListOf<Int>()
+    for (i in 0 until a.size) {
+        val elementOfa = a[i]
+        val elementOfb = b[i]
+        list.add(elementOfa * elementOfb)
+    }
+    return list.sumOf { it }
+}
 
 /**
  * Средняя (3 балла)
@@ -242,7 +251,31 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val list = listOf<String>("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    var rom = ""
+    var number = n
+    var i = 0
+    while (number != 0) {
+        val x = number % 10
+        when (x) {
+            1 -> rom = list[12 - i] + rom
+            2 -> rom = list[12 - i] + list[12 - i] + rom
+            3 -> rom = list[12 - i] + list[12 - i] + list[12 - i] + rom
+            4 -> rom = list[11 - i] + rom
+            5 -> rom = list[10 - i] + rom
+            6 -> rom = list[10 - i] + list[12 - i] + rom
+            7 -> rom = list[10 - i] + list[12 - i] + list[12 - i] + rom
+            8 -> rom = list[10 - i] + list[12 - i] + list[12 - i] + list[12 - i] + rom
+            9 -> rom = list[9 - i] + rom
+            else -> null
+        }
+        number /= 10
+        i += 4
+    }
+    return rom
+}
+
 
 /**
  * Очень сложная (7 баллов)
