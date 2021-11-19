@@ -107,16 +107,12 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    val halfway = (((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2)
+    val time = (((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2)
     return when {
-        halfway < v1 * t1 -> halfway / v1
-        halfway < v1 * t1 + v2 * t2 -> ((halfway - v1 * t1) / v2) + t1
-        halfway < v1 * t1 + v2 * t2 + v3 * t3 -> ((halfway - (v1 * t1 + v2 * t2)) / v3) + t1 + t2
-        else -> 1488.00
-
-
+        time < v1 * t1 -> time / v1
+        time < v1 * t1 + v2 * t2 -> ((time - v1 * t1) / v2) + t1
+        else -> ((time - (v1 * t1 + v2 * t2)) / v3) + t1 + t2
     }
-
 }
 
 /**
@@ -164,41 +160,21 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         return d
     }
 
-    val max: Double =
-        when {
-            (a > b) and (a > c) -> a
-            (b > a) and (b > c) -> b
-            (c > b) and (c > a) -> c
-            else -> 1.0
-        }
-
+    val max: Double = maxOf(a, b, c)
     val min1 =
-        when {
-            max == a -> b
-            max == b -> c
-            max == c -> a
+        when (max) {
+            a -> b
+            b -> c
+            c -> a
             else -> 1.0
-
-
         }
-    val min2 =
-        when {
-            min1 == a -> b
-            min1 == b -> c
-            min1 == c -> a
-            else -> 1.0
-
-
-        }
+    val min2 = minOf(a, b, c)
     return when {
-        max > min1 + min2 -> -1
         sqr(max) < sqr(min1) + sqr(min2) -> 0
         sqr(max) == sqr(min1) + sqr(min2) -> 1
-        (sqr(max) > (sqr(min1) + sqr(min2))) and ((min1 + min2) > max) -> {
-            2
-        }
+        (sqr(max) > (sqr(min1) + sqr(min2))) and ((min1 + min2) > max) -> 2
+        max > min1 + min2 -> -1
         else -> -1
-
     }
 }
 
@@ -211,14 +187,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
-        b == c || a == d -> 0
-        b < c || d < a -> -1
-        (a <= c) and (d <= b) -> d - c
-        (c <= a) and (b <= d) -> b - a
-        (b <= d) and (a <= c) -> b - c
-        (d <= b) and (c <= a) -> d - a
-        else -> 42
-    }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    b == c || a == d -> 0
+    b < c || d < a -> -1
+    (a <= c) && (d <= b) -> d - c
+    (c <= a) && (b <= d) -> b - a
+    (b <= d) && (a <= c) -> b - c
+    else -> d - a
 }
