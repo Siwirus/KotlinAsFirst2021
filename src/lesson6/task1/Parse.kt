@@ -88,18 +88,32 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val mounth = listOf<String>(" ", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    val mounth = listOf<String>(
+        " ",
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "октября",
+        "ноября",
+        "декабря"
+    )
     val list = digital.split(".")
-    val res = list[1].toInt()
-    val result = ""
-    if (res > 12 || res < 1) return ""
-    if (list.size >= 4) return ""
-    if (list[0].toInt() > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
-    if (list[0].toInt() > 30 && res in arrayOf(4, 6, 8, 11, 9, 11)) return ""
-    if (list[0].toInt() > 28 && res == 2) return ""
-    return result + list[0].toInt() + " " + mounth[res] + " " + list[2]
-
-
+    if ("""^(\d{1,2}).(\d{1,2}).(\d{4})$""".toRegex().matches(digital)) {
+        val res = list[1].toInt()
+        val day = list[0].toInt()
+        if (res > 12 || res < 1) return ""
+        if (list.size >= 4) return ""
+        if (day > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
+        if (day > 30 && res in arrayOf(4, 6, 8, 11, 9, 11)) return ""
+        if (day > 28 && res == 2) return ""
+        return "" + day + " " + mounth[res] + " " + list[2]
+    } else return ""
 }
 
 /**
