@@ -105,7 +105,7 @@ fun dateDigitToStr(digital: String): String {
         "декабря"
     )
     val list = digital.split(".")
-    if ("""^(\d{1,2}).(\d{1,2}).(\d{1,4})$""".toRegex().matches(digital)) {
+    if ("""^(\d{1,2}).(\d{1,2}).(\d{1,10})$""".toRegex().matches(digital)) {
         val res = list[1].toInt()
         val day = list[0].toInt()
         if (res > 12 || res < 1) return ""
