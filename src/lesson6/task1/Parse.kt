@@ -111,7 +111,7 @@ fun dateDigitToStr(digital: String): String {
         if (res > 12 || res < 1) return ""
         if (list.size >= 4) return ""
         if (day > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
-        if (day > 30 && res in arrayOf(4, 6, 8, 11, 9, 11)) return ""
+        if (day > 30 && res in arrayOf(4, 6, 11, 9)) return ""
         if (day > 28 && res == 2) return ""
         return "" + day + " " + mounth[res] + " " + list[2]
     } else return ""
