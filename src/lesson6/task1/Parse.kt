@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -177,7 +178,18 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val words = str.split(" ")
+    var size = 0
+    for (i in 1..words.lastIndex) {
+        size += words[i - 1].length
+        if (words[i - 1].equals(words[i], ignoreCase = true)) {
+            size += i - words[i - 1].length
+            break
+        }
+    }
+    return size - 1
+}
 
 /**
  * Сложная (6 баллов)
