@@ -108,10 +108,12 @@ fun dateDigitToStr(digital: String): String {
     if ("""^(\d{1,2}).(\d{1,2}).(\d{1,10})$""".toRegex().matches(digital)) {
         val res = list[1].toInt()
         val day = list[0].toInt()
+        val year = list[2].toInt()
         if (res > 12 || res < 1) return ""
         if (list.size >= 4) return ""
         if (day > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
         if (day > 30 && res in arrayOf(4, 6, 11, 9)) return ""
+        if (day > 29 && (year % 4 != 0 || year % 400 != 0) && year % 100 == 0 && res == 2) return ""
         if (day > 28 && res == 2) return ""
         return "" + day + " " + mounth[res] + " " + list[2]
     } else return ""
@@ -185,7 +187,7 @@ fun firstDuplicateIndex(str: String): Int {
     for (i in 1..words.lastIndex) {
         size += words[i - 1].length
         if (words[i - 1].equals(words[i], ignoreCase = true)) {
-             answer = size + i - words[i - 1].length
+            answer = size + i - words[i - 1].length
             break
         }
     }
