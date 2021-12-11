@@ -105,7 +105,7 @@ fun dateDigitToStr(digital: String): String {
         "декабря"
     )
     val list = digital.split(".")
-    if ("""^(\d{1,2}).(\d{1,2}).(\d{4})$""".toRegex().matches(digital)) {
+    if ("""^(\d{1,2}).(\d{1,2}).(\d)$""".toRegex().matches(digital)) {
         val res = list[1].toInt()
         val day = list[0].toInt()
         if (res > 12 || res < 1) return ""
@@ -181,14 +181,15 @@ fun plusMinus(expression: String): Int = TODO()
 fun firstDuplicateIndex(str: String): Int {
     val words = str.split(" ")
     var size = 0
+    var answer = 0
     for (i in 1..words.lastIndex) {
         size += words[i - 1].length
         if (words[i - 1].equals(words[i], ignoreCase = true)) {
-            size += i - words[i - 1].length
+             answer = size + i - words[i - 1].length
             break
         }
     }
-    return size - 1
+    return answer - 1
 }
 
 /**
