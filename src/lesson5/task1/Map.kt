@@ -2,10 +2,20 @@
 
 package lesson5.task1
 
+import kotlin.math.max
+import kotlin.math.min
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
 // Вместе с предыдущими уроками = 33/47
+fun main() {
+    val list = mapOf("a" to (1 to 2), "b" to (2 to 3))
+    for ((key, value) in list) {
+        println(key)
+        println(value)
+    }
+}
 
 /**
  * Пример
@@ -284,7 +294,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
-//Проходится по мапе а не дважды по спискам
+//Проходится по мапе, а не дважды по спискам
 
 /**
  * Очень сложная (8 баллов)
@@ -307,4 +317,35 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+//a b c d
+//a b c d
+//a b
+//a[i,w] = max(ci + a[i-1,w-mi], a[i-1,w])
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    if (treasures.isEmpty()) return setOf()
+    //хранилище в котором есть данные масса, стоимость и шо за объекты
+    val fallout = mutableMapOf<Int, Pair<Int, Set<String>>>()
+    fallout[0] = Pair(0, setOf())
+    for ((key1, value1) in treasures) {
+        val falloutShelter = mutableMapOf<Int, Pair<Int, Set<String>>>()
+        for ((key, value) in fallout) {
+            if (value1.first + key + key <= capacity) {
+                //посмотреть, когда масса одинакова
+                if ((!fallout.contains(value1.first + key) || (fallout[value1.first + key]!!.first < value1.second + value.first))
+                    && !value.second.contains(key1)
+                ) {//тут добавляешь новую комбинацию
+                    falloutShelter[key + value1.first] =
+                        Pair(
+                            value1.second + value.first,
+                            value.second + key1
+                        )
+                }
+            }
+        }
+        for ((key, value) in falloutShelter) fallout[key] = value
+    }
+    return fallout.maxByOrNull { it.value.first }!!.value.second
+
+}
+
+
