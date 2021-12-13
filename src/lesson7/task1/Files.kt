@@ -96,6 +96,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     }
     return answer
 }
+
 //    val tokens = text.split(" ")
 //    for(token in tokens) {
 //        for (i in 0..substrings.lastIndex) {
