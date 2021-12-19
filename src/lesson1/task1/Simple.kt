@@ -85,7 +85,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(deg: Int, min: Int, sec: kotlin.Int): Double =
-    (deg * (PI / 180)) + min * (PI / (180 * 60)) + sec * (PI / (180 * 60 * 60))
+    deg * (PI / 180) + min * (PI / 10800) + sec * (PI / 648000)
 
 /**
  * Тривиальная (1 балл)
@@ -122,7 +122,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
     val p = (percent.toDouble() / 100) + 1
-    return (initial * p * p * p)
+    return (initial * p.pow(3))
 }
 
 /**
@@ -132,3 +132,30 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int = (number / 100) + (((number / 10) % 10) * 10) + ((number % 10) * 100)
+
+
+fun myFun(state: String, move: String): Any {
+    val y = listOf<Char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
+    val list = state.split("/n").map { it.toMutableList() }.reversed().toMutableList()
+    val map1 = list.toMutableList()
+    val moving = move.split(" ").map { it.toList() }
+    val map2 = moving.toMutableList()
+    for (i in 0..7) {
+        for (z in 0..7) {
+            if (map1[i][z] != 'x') {
+                if (y[z] == map2[0][0] && map2[0][1] == i.toChar()) {
+                    map1[i][z] = 'x'
+
+                }
+
+            }
+        }
+
+    }
+
+
+}
+
+
+
+
