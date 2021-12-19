@@ -151,9 +151,9 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
 fun times(a: List<Int>, b: List<Int>): Int {
     val list = mutableListOf<Int>()
     for (i in 0 until a.size) {
-        val elementOfa = a[i]
-        val elementOfb = b[i]
-        list.add(elementOfa * elementOfb)
+        val elementOfA = a[i]
+        val elementOfB = b[i]
+        list.add(elementOfA * elementOfB)
     }
     return list.sumOf { it }
 }
@@ -253,27 +253,26 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     val list = listOf<String>("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    var rom = ""
+    var rom = StringBuilder()
     var number = n
     var i = 0
     while (number != 0) {
-        val x = number % 10
-        when (x) {
-            1 -> rom = list[12 - i] + rom
-            2 -> rom = list[12 - i] + list[12 - i] + rom
-            3 -> rom = list[12 - i] + list[12 - i] + list[12 - i] + rom
-            4 -> rom = list[11 - i] + rom
-            5 -> rom = list[10 - i] + rom
-            6 -> rom = list[10 - i] + list[12 - i] + rom
-            7 -> rom = list[10 - i] + list[12 - i] + list[12 - i] + rom
-            8 -> rom = list[10 - i] + list[12 - i] + list[12 - i] + list[12 - i] + rom
-            9 -> rom = list[9 - i] + rom
-            else -> null
+        when (number % 10) {
+            1 -> rom.append(list[12 - i] + rom.toString())
+            2 -> rom.append(list[12 - i] + list[12 - i] + rom)
+            3 -> rom.append(list[12 - i] + list[12 - i] + list[12 - i] + rom)
+            4 -> rom.append(list[11 - i] + rom)
+            5 -> rom.append(list[10 - i] + rom)
+            6 -> rom.append(list[10 - i] + list[12 - i] + rom)
+            7 -> rom.append(list[10 - i] + list[12 - i] + list[12 - i] + rom)
+            8 -> rom.append(list[10 - i] + list[12 - i] + list[12 - i] + list[12 - i] + rom)
+            9 -> rom.append(list[9 - i] + rom)
+            else -> rom.append(list[9 - i] + rom)
         }
         number /= 10
         i += 4
     }
-    return rom
+    return rom.toString()
 }
 
 
