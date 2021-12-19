@@ -77,12 +77,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var d = 0
     var x = n
-    if ((n % 10) == n) return 1 else
-        do {
-            d += 1
-            x /= 10
-        } while ((x / 10) != 0)
-    return d + 1
+    do {
+        d += 1
+        x /= 10
+    } while (x != 0)
+    return d
 
 }
 
@@ -246,6 +245,7 @@ fun fibSequenceDigit(n: Int): Int {
         }
         return f
     }
+
     var d = 0
     val x = Int.MAX_VALUE
     val z = 10.0
