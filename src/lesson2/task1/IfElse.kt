@@ -160,7 +160,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         return d
     }
 
-    val max: Double = maxOf(a, b, c)
+    val max = maxOf(a, b, c)
     val min1 =
         when (max) {
             a -> b
