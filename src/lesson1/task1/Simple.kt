@@ -134,27 +134,10 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
 fun numberRevert(number: Int): Int = (number / 100) + (((number / 10) % 10) * 10) + ((number % 10) * 100)
 
 
-fun myFun(state: String, move: String): Any {
-    val y = listOf<Char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
-    val list = state.split("/n").map { it.toMutableList() }.reversed().toMutableList()
-    val map1 = list.toMutableList()
-    val moving = move.split(" ").map { it.toList() }
-    val map2 = moving.toMutableList()
-    for (i in 0..7) {
-        for (z in 0..7) {
-            if (map1[i][z] != 'x') {
-                if (y[z] == map2[0][0] && map2[0][1] == i.toChar()) {
-                    map1[i][z] = 'x'
-
-                }
-
-            }
-        }
-
-    }
 
 
-}
+
+
 
 
 
