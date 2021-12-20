@@ -109,15 +109,15 @@ fun dateDigitToStr(digital: String): String {
         val res = list[1].toInt()
         val day = list[0].toInt()
         val year = list[2].toInt()
-        var vesocos = 0
-        if (year % 4 == 0 && year % 100 != 0) vesocos += 1
-        if (year % 400 == 0) vesocos += 1
+        var isLeap = false
+        if (year % 4 == 0 && year % 100 != 0) isLeap = true
+        if (year % 400 == 0) isLeap = true
         if (res > 12 || res < 1) return ""
         if (list.size >= 4) return ""
         if (day > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
         if (day > 30 && res in arrayOf(4, 6, 11, 9)) return ""
-        if (day > 29 && vesocos == 1 && res == 2) return ""
-        if (day > 28 && vesocos != 1 && res == 2) return ""
+        if (day > 29 && isLeap && res == 2) return ""
+        if (day > 28 && isLeap && res == 2) return ""
         return "" + day + " " + mounth[res] + " " + list[2]
     } else return ""
 }
@@ -164,15 +164,14 @@ fun bestLongJump(jumps: String): Int = TODO()
 fun bestHighJump(jumps: String): Int {
     val results = jumps.split(" ")
     var answer = -1
-    try {
-        for (i in 0..results.lastIndex) {
-            if (results[i + 1] == "+" && results[i].toInt() > answer) {
-                answer = results[i].toInt()
-            }
+    if (!"""^((\d+)\s([%+-]+)(\s|))+$""".toRegex().matches(jumps)) return -1
+    for ((i, result) in results.withIndex()) {
+        if (results[i] == "+" && results[i - 1].toInt() > answer) {
+            answer = results[i - 1].toInt()
         }
-    } catch (e: Exception) {
-        return answer
     }
+
+
     return answer
 }
 
