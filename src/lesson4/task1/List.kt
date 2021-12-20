@@ -253,21 +253,20 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     val list = listOf<String>("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
-    var rom = StringBuilder()
+    val rom = StringBuilder()
     var number = n
     var i = 0
     while (number != 0) {
         when (number % 10) {
-            1 -> rom.append(list[12 - i] + rom.toString())
-            2 -> rom.append(list[12 - i] + list[12 - i] + rom)
-            3 -> rom.append(list[12 - i] + list[12 - i] + list[12 - i] + rom)
-            4 -> rom.append(list[11 - i] + rom)
-            5 -> rom.append(list[10 - i] + rom)
-            6 -> rom.append(list[10 - i] + list[12 - i] + rom)
-            7 -> rom.append(list[10 - i] + list[12 - i] + list[12 - i] + rom)
-            8 -> rom.append(list[10 - i] + list[12 - i] + list[12 - i] + list[12 - i] + rom)
-            9 -> rom.append(list[9 - i] + rom)
-            else -> rom.append(list[9 - i] + rom)
+            1 -> rom.insert(0, list[12 - i])
+            2 -> rom.insert(0, list[12 - i] + list[12 - i])
+            3 -> rom.insert(0, list[12 - i] + list[12 - i] + list[12 - i])
+            4 -> rom.insert(0, list[11 - i])
+            5 -> rom.insert(0, list[10 - i])
+            6 -> rom.insert(0, list[10 - i] + list[12 - i])
+            7 -> rom.insert(0, list[10 - i] + list[12 - i] + list[12 - i])
+            8 -> rom.insert(0, list[10 - i] + list[12 - i] + list[12 - i] + list[12 - i])
+            9 -> rom.insert(0, list[9 - i])
         }
         number /= 10
         i += 4
