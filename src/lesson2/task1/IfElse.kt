@@ -155,23 +155,23 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val max = maxOf(a, b, c)
-    val min2 = minOf(a, b, c)
-    val min1 =
+    val maxSide = maxOf(a, b, c)
+    val minSide = minOf(a, b, c)
+    val midSide =
         when {
-            min2 == c && max == b -> a
-            min2 == a && max == b -> c
-            min2 == c && max == a -> b
-            min2 == b && max == a -> c
-            min2 == b && max == c -> a
-            min2 == a && max == c -> b
+            minSide == c && maxSide == b -> a
+            minSide == a && maxSide == b -> c
+            minSide == c && maxSide == a -> b
+            minSide == b && maxSide == a -> c
+            minSide == b && maxSide == c -> a
+            minSide == a && maxSide == c -> b
             else -> 1.0
         }
     return when {
-        sqr(max) < sqr(min1) + sqr(min2) -> 0
-        sqr(max) == sqr(min1) + sqr(min2) -> 1
-        (sqr(max) > (sqr(min1) + sqr(min2))) and ((min1 + min2) > max) -> 2
-        max > min1 + min2 -> -1
+        sqr(maxSide) < sqr(minSide) + sqr(minSide) -> 0
+        sqr(maxSide) == sqr(minSide) + sqr(minSide) -> 1
+        (sqr(maxSide) > (sqr(minSide) + sqr(minSide))) and ((minSide + minSide) > max) -> 2
+        maxSide > minSide + minSide -> -1
         else -> -1
     }
 }
