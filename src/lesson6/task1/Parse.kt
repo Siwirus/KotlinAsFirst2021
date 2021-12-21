@@ -76,6 +76,10 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String = TODO()
+
+
+
+
 val month = listOf(
     " ",
     "января",
