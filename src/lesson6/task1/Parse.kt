@@ -89,7 +89,7 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val mounth = listOf<String>(
+    val month = listOf<String>(
         " ",
         "января",
         "февраля",
@@ -110,15 +110,16 @@ fun dateDigitToStr(digital: String): String {
         val day = list[0].toInt()
         val year = list[2].toInt()
         var isLeap = false
+        val months31 = arrayOf(1, 3, 5, 7, 8, 10, 12)
         if (year % 4 == 0 && year % 100 != 0) isLeap = true
         if (year % 400 == 0) isLeap = true
+        if (day > 31 || day < 1) return ""
         if (res > 12 || res < 1) return ""
-        if (list.size >= 4) return ""
-        if (day > 31 && res in arrayOf(1, 3, 5, 7, 8, 10, 12)) return ""
-        if (day > 30 && res in arrayOf(4, 6, 11, 9)) return ""
+        if (day > 31 && res in months31) return ""
+        if (day > 30 && res !in months31) return ""
         if (day > 29 && isLeap && res == 2) return ""
         if (day > 28 && !isLeap && res == 2) return ""
-        return "" + day + " " + mounth[res] + " " + list[2]
+        return "" + day + " " + month[res] + " " + list[2]
     } else return ""
 }
 
