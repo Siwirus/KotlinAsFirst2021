@@ -89,7 +89,7 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val month = listOf<String>(
+    val month = listOf(
         " ",
         "января",
         "февраля",
