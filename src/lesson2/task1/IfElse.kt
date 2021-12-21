@@ -107,11 +107,11 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    val time = (((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2)
+    val halfWay = (((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2)
     return when {
-        time < v1 * t1 -> time / v1
-        time < v1 * t1 + v2 * t2 -> ((time - v1 * t1) / v2) + t1
-        else -> ((time - (v1 * t1 + v2 * t2)) / v3) + t1 + t2
+        halfWay < v1 * t1 -> halfWay / v1
+        halfWay < v1 * t1 + v2 * t2 -> ((halfWay - v1 * t1) / v2) + t1
+        else -> ((halfWay - (v1 * t1 + v2 * t2)) / v3) + t1 + t2
     }
 }
 
@@ -155,11 +155,6 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    fun sqr(x: Double): Double {
-        val d = x * x
-        return d
-    }
-
     val max = maxOf(a, b, c)
     val min1 =
         when (max) {
