@@ -219,16 +219,12 @@ fun squareSequenceDigit(n: Int): Int {
     val z = 10.0
     var y = 1
     var i = 1
-
-
     while (d < n) {
         d += digitNumber(sqr(i))
         y = sqr(i)
         i += 1
     }
-
-    return ((y / z.pow(d - n)) % 10).toInt()
-
+    return digit(y, z, d, n)
 }
 
 /**
@@ -250,6 +246,7 @@ fun fibSequenceDigit(n: Int): Int {
         y = fib(i)
         i += 1
     }
-    return ((y / z.pow(d - n)) % 10).toInt()
-
+    return digit(y, z, d, n)
 }
+
+private fun digit(y: Int, z: Double, d: Int, n: Int) = ((y / z.pow(d - n)) % 10).toInt()
