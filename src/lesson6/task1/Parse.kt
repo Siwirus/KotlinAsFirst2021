@@ -76,6 +76,21 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String = TODO()
+val month = listOf(
+    " ",
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря"
+)
 
 
 /**
@@ -89,21 +104,6 @@ fun dateStrToDigit(str: String): String = TODO()
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val month = listOf(
-        " ",
-        "января",
-        "февраля",
-        "марта",
-        "апреля",
-        "мая",
-        "июня",
-        "июля",
-        "августа",
-        "сентября",
-        "октября",
-        "ноября",
-        "декабря"
-    )
     val list = digital.split(".")
     if ("""^(\d{1,2}).(\d{1,2}).(\d{1,10})$""".toRegex().matches(digital)) {
         val res = list[1].toInt()
