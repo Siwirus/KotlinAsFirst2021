@@ -168,10 +168,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
             else -> 1.0
         }
     return when {
-        sqr(maxSide) < sqr(minSide) + sqr(minSide) -> 0
-        sqr(maxSide) == sqr(minSide) + sqr(minSide) -> 1
-        (sqr(maxSide) > (sqr(minSide) + sqr(minSide))) and ((minSide + minSide) > maxSide) -> 2
-        maxSide > minSide + minSide -> -1
+        sqr(maxSide) < sqr(minSide) + sqr(midSide) -> 0
+        sqr(maxSide) == sqr(minSide) + sqr(midSide) -> 1
+        (sqr(maxSide) > (sqr(minSide) + sqr(midSide))) and ((minSide + midSide) > maxSide) -> 2
+        maxSide > minSide + midSide -> -1
         else -> -1
     }
 }
