@@ -3,6 +3,8 @@
 package lesson7.task1
 
 import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -63,15 +65,14 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    val text = File(inputName).readText()
-    val tokens = text.split('\n')
-    val filteredTokens = tokens.filter { !it.startsWith('_') }
-    val filteredText = filteredTokens.joinToString("\n")
-
-    File(outputName).writeText(filteredText)
-
+    FileWriter(outputName).use { writer ->
+        FileReader(inputName).forEachLine { line ->
+            if (!line.startsWith('_')) {
+                writer.appendLine(line)
+            }
+        }
+    }
 }
-
 
 /**
  * Средняя (14 баллов)
@@ -83,16 +84,22 @@ fun deleteMarked(inputName: String, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    val text = File(inputName).readText().lowercase()
     val answer = mutableMapOf<String, Int>()
-    for (substring in substrings) {
-        val lowSubstring = substring.lowercase()
-        var count = 0
-        for (i in 0..text.lastIndex - substring.length + 1) {
-            val sub = text.substring(i, i + substring.length)
-            if (sub == lowSubstring) count++
+    FileReader(inputName).forEachLine {
+        val text = it.lowercase()
+        for (substring in substrings) {
+            val lowSubstring = substring.lowercase()
+            var count = 0
+            for (i in 0..text.lastIndex - substring.length + 1) {
+                val sub = text.substring(i, i + substring.length)
+                if (sub == lowSubstring) count++
+            }
+            if (answer[substring] == null) {
+                answer[substring] = count
+            } else {
+                answer[substring] = answer[substring]!! + count
+            }
         }
-        answer[substring] = count
     }
     return answer
 }
