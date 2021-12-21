@@ -220,6 +220,7 @@ fun squareSequenceDigit(n: Int): Int {
     var y = 1
     var i = 1
 
+
     while (d < n) {
         d += digitNumber(sqr(i))
         y = sqr(i)
