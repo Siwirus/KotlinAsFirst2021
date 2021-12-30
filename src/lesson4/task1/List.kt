@@ -321,14 +321,15 @@ fun russian(n: Int): String {
                 dozensRus[(secondHalf % 100) / 10] + " ")) +
             (if (secondHalf % 100 !in 11..19) unitsRus[secondHalf % 10] else " ")
     if (firstHalf > 0) answer = hundredsRus[firstHalf / 100] +
-            (if (firstHalf % 100 in 11..19) " " + dozensRus[firstHalf % 100] + " " +
-                    thousandsRus[0] else dozensRus[(firstHalf % 100) / 10] +
-                    when (firstHalf % 10) {
-                        0 -> " " + thousandsRus[0]
-                        1 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[2]
-                        2, 3, 4 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[1]
-                        else -> " " + unitsRus[firstHalf % 10] + " " + thousandsRus[0]
-                    }) + " " + answer.trim()
+            (if (firstHalf % 100 == 0) " " + thousandsRus[0] else
+                (if (firstHalf % 100 in 11..19) " " + dozensRus[firstHalf % 100] + " " +
+                        thousandsRus[0] else " " + dozensRus[(firstHalf % 100) / 10] +
+                        when (firstHalf % 10) {
+                            0 -> " " + thousandsRus[0]
+                            1 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[2]
+                            2, 3, 4 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[1]
+                            else -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[0]
+                        })) + " " + answer.trim()
 
     return answer.trim()
 
