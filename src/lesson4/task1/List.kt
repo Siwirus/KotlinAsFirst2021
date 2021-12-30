@@ -327,7 +327,7 @@ fun russian(n: Int): String {
                         0 -> " " + thousandsRus[0]
                         1 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[2]
                         2, 3, 4 -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[1]
-                        else -> " " + unitRus[firstHalf % 10] + " " + thousandsRus[0]
+                        else -> " " + unitsRus[firstHalf % 10] + " " + thousandsRus[0]
                     }) + " " + answer.trim()
 
     return answer.trim()
