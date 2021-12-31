@@ -205,7 +205,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var kinds = mutableListOf<String>()
     for ((key, value) in stuff) {
         kinds.add(value.first)
-        if (value.first == kind && value.second < cheapPrice) {
+        if (value.first == kind && value.second <= cheapPrice) {
             cheapPrice = value.second
             name = key
         }
