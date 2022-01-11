@@ -109,14 +109,32 @@ fun fib(n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var answer = n
+    for (i in 2..n.toDouble().pow(0.5).toInt()) {
+        if (n % i == 0) {
+            answer = i
+            break
+        }
+    }
+    return answer
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var answer = 1
+    for (i in n - 1 downTo n.toDouble().pow(0.5).toInt()) {
+        if (n % i == 0) {
+            answer = i
+            break
+        }
+    }
+    return answer
+}
 
 /**
  * Простая (2 балла)
@@ -134,7 +152,20 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var n = x
+    var answer = 0
+    while (n != 1) {
+        if (n % 2 == 0) {
+            n /= 2
+            answer++
+        } else {
+            n = 3 * n + 1
+            answer++
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -142,7 +173,16 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var answer = n * m
+    for (i in maxOf(m, n)..m * n) {
+        if (i % n == 0 && i % m == 0) {
+            answer = i
+            break
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -151,7 +191,16 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var answer = true
+    for (i in 2..maxOf(m, n) / 2 + 1) {
+        if (m % i == 0 && n % i == 0) {
+            answer = false
+            break
+        }
+    }
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -181,7 +230,21 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var x = n
+    var sumOfDigits = 0
+    var i = 0
+    var answer = false
+    if (n == 0) return answer
+    while (x > 0) {
+        sumOfDigits += x % 10
+        x /= 10
+        i++
+    }
+    if (sumOfDigits == (n % 10) * i) return answer
+    else answer = true
+    return answer
+}
 
 /**
  * Средняя (4 балла)
