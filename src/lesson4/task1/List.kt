@@ -5,6 +5,7 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import lesson3.task1.digitNumber
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -167,7 +168,13 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var answer = 0
+    for (i in 0..p.lastIndex) {
+        answer += p[i] * x.toDouble().pow(i).toInt()
+    }
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -179,7 +186,12 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    for (i in 1..list.lastIndex) {
+        list[i] += list[i - 1]
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -228,7 +240,14 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    val list = digits.reversed()
+    var answer = 0
+    for (i in 0..list.lastIndex) {
+        answer += list[i] * base.toDouble().pow(i).toInt()
+    }
+    return answer
+}
 
 /**
  * Сложная (4 балла)
@@ -332,6 +351,6 @@ fun russian(n: Int): String {
                     })) + " " + answer.trim()
     answer = (hundredsRus[firstHalf / 100] + " " + answer.trim()).trim()
 
-    return answer.trim()
+    return answer
 
 }
