@@ -127,9 +127,9 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var answer = 1
-    for (i in n - 1 downTo n.toDouble().pow(0.5).toInt()) {
+    for (i in 2..n.toDouble().pow(0.5).toInt()) {
         if (n % i == 0) {
-            answer = i
+            answer = n / i
             break
         }
     }
@@ -175,7 +175,7 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var answer = n * m
-    for (i in maxOf(m, n)..m * n) {
+    for (i in maxOf(m, n)..m * n / 2) {
         if (i % n == 0 && i % m == 0) {
             answer = i
             break
@@ -236,7 +236,11 @@ fun hasDifferentDigits(n: Int): Boolean {
     var i = 0
     var answer = false
     if (n == 0) return answer
-    while (x > 0) {
+    while (x > 0 && !answer) {
+        if (x % 10 != (x % 100)) {
+            answer = true
+            break
+        }
         sumOfDigits += x % 10
         x /= 10
         i++
