@@ -236,17 +236,14 @@ fun hasDifferentDigits(n: Int): Boolean {
     var i = 0
     var answer = false
     if (n == 0) return answer
-    while (x > 0 && !answer) {
-        if (x % 10 != (x % 100)) {
+    while (x > 0 && i != digitNumber(n) - 1) {
+        if (x % 10 != (x % 100) / 10) {
             answer = true
             break
         }
-        sumOfDigits += x % 10
         x /= 10
         i++
     }
-    if (sumOfDigits == (n % 10) * i) return answer
-    else answer = true
     return answer
 }
 
