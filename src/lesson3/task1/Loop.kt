@@ -232,7 +232,6 @@ fun isPalindrome(n: Int): Boolean = TODO()
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var x = n
-    var sumOfDigits = 0
     var i = 0
     var answer = false
     if (n == 0) return answer
