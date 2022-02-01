@@ -9,13 +9,13 @@ import kotlin.math.min
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
 // Вместе с предыдущими уроками = 33/47
-fun main() {
-    val list = mapOf("a" to (1 to 2), "b" to (2 to 3))
-    for ((key, value) in list) {
-        println(key)
-        println(value)
-    }
-}
+//fun main() {
+//    val list = mapOf("a" to (1 to 2), "b" to (2 to 3))
+//    for ((key, value) in list) {
+//        println(key)
+//        println(value)
+//    }
+//}
 
 /**
  * Пример
@@ -108,6 +108,7 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
 
+
 /**
  * Простая (2 балла)
  *
@@ -118,7 +119,13 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((key, value) in b) {
+        if (a[key] == value) return true
+    }
+    return false
+}
+
 
 /**
  * Простая (2 балла)
@@ -306,8 +313,16 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
-//Проходится по мапе, а не дважды по спискам
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var answer = Pair(-1, -1)
+    for (i in 0..list.lastIndex) {
+        for (z in 0..list.lastIndex) {
+            if (i != z && list[i] + list[z] == number) answer = Pair(min(i, z), max(i, z))
+        }
+    }
+    return answer
+}
+
 
 /**
  * Очень сложная (8 баллов)
@@ -336,17 +351,15 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
 //a[i,w] = max(ci + a[i-1,w-mi], a[i-1,w])
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     if (treasures.isEmpty()) return setOf()
-    //хранилище в котором есть данные масса, стоимость и шо за объекты
     val fallout = mutableMapOf<Int, Pair<Int, Set<String>>>()
     fallout[0] = Pair(0, setOf())
     for ((key1, value1) in treasures) {
         val falloutShelter = mutableMapOf<Int, Pair<Int, Set<String>>>()
         for ((key, value) in fallout) {
             if (value1.first + key + key <= capacity) {
-                //посмотреть, когда масса одинакова
                 if ((!fallout.contains(value1.first + key) || (fallout[value1.first + key]!!.first < value1.second + value.first))
                     && !value.second.contains(key1)
-                ) {//тут добавляешь новую комбинацию
+                ) {
                     falloutShelter[key + value1.first] =
                         Pair(
                             value1.second + value.first,
