@@ -15,7 +15,12 @@ package lesson12.task1
  *
  * В конструктор передаётся название станции отправления для данного расписания.
  */
-class TrainTimeTable(val baseStationName: String) {
+class TrainTimeTable(private val baseStationName: String) {
+    private val listOfTrains = mutableListOf<Train>()
+    private val listOfNames = mutableListOf<String>()
+    private var listOfTimes = mutableListOf<Pair<Int, Train>>()
+
+
     /**
      * Добавить новый поезд.
      *
@@ -26,7 +31,16 @@ class TrainTimeTable(val baseStationName: String) {
      * @param destination конечная станция
      * @return true, если поезд успешно добавлен, false, если такой поезд уже есть
      */
-    fun addTrain(train: String, depart: Time, destination: Stop): Boolean = TODO()
+    fun addTrain(train: String, depart: Time, destination: Stop): Boolean {
+        val x = Train(train, Stop(baseStationName, depart), destination)
+        val time = depart.hour * 60 + depart.minute
+        return if (train !in listOfNames) {
+            listOfNames += train
+            listOfTimes += time to x
+            true
+        } else false
+
+    }
 
     /**
      * Удалить существующий поезд.
@@ -36,7 +50,16 @@ class TrainTimeTable(val baseStationName: String) {
      * @param train название поезда
      * @return true, если поезд успешно удалён, false, если такой поезд не существует
      */
-    fun removeTrain(train: String): Boolean = TODO()
+    fun removeTrain(train: String): Boolean {
+        var res = false
+        if (train in listOfNames) {
+            for (i in listOfTimes) {
+                if (i.second.name == train) listOfTimes -= i
+            }
+            res = true
+        }
+        return res
+    }
 
     /**
      * Добавить/изменить начальную, промежуточную или конечную остановку поезду.
@@ -73,7 +96,12 @@ class TrainTimeTable(val baseStationName: String) {
     /**
      * Вернуть список всех поездов, упорядоченный по времени отправления с baseStationName
      */
-    fun trains(): List<Train> = TODO()
+    fun trains(): List<Train> {
+        for ((key, value) in listOfTimes.sortedBy { it.first }.toMap()) {
+            listOfTrains.add(value)
+        }
+        return listOfTrains
+    }
 
     /**
      * Вернуть список всех поездов, отправляющихся не ранее currentTime
@@ -103,7 +131,9 @@ data class Time(val hour: Int, val minute: Int) : Comparable<Time> {
 /**
  * Остановка (название, время прибытия)
  */
-data class Stop(val name: String, val time: Time)
+data class Stop(val name: String, val time: Time) {
+    constructor(name: String, time: Time, destination: Stop) : this(name, time)
+}
 
 /**
  * Поезд (имя, список остановок, упорядоченный по времени).
