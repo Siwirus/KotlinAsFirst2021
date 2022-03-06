@@ -2,6 +2,8 @@
 
 package lesson11.task1
 
+import kotlin.math.pow
+
 /**
  * Класс "полином с вещественными коэффициентами".
  *
@@ -19,17 +21,26 @@ package lesson11.task1
  * Нули в середине и в конце пропускаться не должны, например: x^3+2x+1 --> Polynom(1.0, 2.0, 0.0, 1.0)
  * Старшие коэффициенты, равные нулю, игнорировать, например Polynom(0.0, 0.0, 5.0, 3.0) соответствует 5x+3
  */
-class Polynom(vararg coeffs: Double) {
+
+class Polynom(private vararg val coeffs: Double) {
+    private val list = coeffs.toList()
 
     /**
      * Геттер: вернуть значение коэффициента при x^i
      */
-    fun coeff(i: Int): Double = TODO()
+    fun coeff(i: Int): Double = list.reversed()[i]
+
 
     /**
      * Расчёт значения при заданном x
      */
-    fun getValue(x: Double): Double = TODO()
+    fun getValue(x: Double): Double {
+        var res = 0.0
+        for (i in 0..list.lastIndex) {
+            res += list.reversed()[i] * x.pow(i)
+        }
+        return res
+    }
 
     /**
      * Степень (максимальная степень x при ненулевом слагаемом, например 2 для x^2+x+1).
@@ -38,27 +49,82 @@ class Polynom(vararg coeffs: Double) {
      * Слагаемые с нулевыми коэффициентами игнорировать, т.е.
      * степень 0x^2+0x+2 также равна 0.
      */
-    fun degree(): Int = TODO()
+    fun degree(): Int {
+        var res = 0
+        for (i in 0..list.lastIndex) {
+            if (list.reversed()[i] != 0.0) res = i
+        }
+        return res
+    }
 
     /**
      * Сложение
      */
-    operator fun plus(other: Polynom): Polynom = TODO()
+    operator fun plus(other: Polynom): Polynom {
+        val res = mutableListOf<Double>()
+        val min = minOf(other.degree(), list.lastIndex)
+        for (i in 0..min) {
+            res += other.coeff(i) + list.reversed()[i]
+        }
+        if (min == list.lastIndex) {
+            for (i in list.lastIndex + 1..other.degree())
+                res += other.coeff(i)
+        } else {
+            for (i in other.degree() + 1..list.lastIndex)
+                res += list.reversed()[i]
+
+        }
+        return Polynom(*res.reversed().toDoubleArray())
+
+    }
 
     /**
      * Смена знака (при всех слагаемых)
      */
-    operator fun unaryMinus(): Polynom = TODO()
+    operator fun unaryMinus(): Polynom = Polynom(*coeffs.map { -it }.toDoubleArray())
 
     /**
      * Вычитание
      */
-    operator fun minus(other: Polynom): Polynom = TODO()
+    operator fun minus(other: Polynom): Polynom = this + (-other)
+
 
     /**
      * Умножение
      */
-    operator fun times(other: Polynom): Polynom = TODO()
+    operator fun times(other: Polynom): Polynom {
+        var res = Polynom()
+        var listOfCalculations = mutableListOf<Double>()
+        val min = minOf(other.degree(), list.lastIndex)
+        val otherCoeffs = other.coeffs.toList()
+
+
+        if (min == list.lastIndex) {
+            for (i in 0..min) {
+                var x = i
+                listOfCalculations = mutableListOf()
+                listOfCalculations += otherCoeffs.map { it * list.reversed()[i] }
+                while (x > 0) {
+                    listOfCalculations += 0.0
+                    x -= 1
+                }
+                res += Polynom(*listOfCalculations.toDoubleArray())
+            }
+
+        } else {
+            for (i in 0..min) {
+                var x = i
+                listOfCalculations = mutableListOf()
+                listOfCalculations += list.map { it * otherCoeffs.reversed()[i] }
+                while (x > 0) {
+                    listOfCalculations += 0.0
+                    x -= 1
+                }
+                res += Polynom(*listOfCalculations.toDoubleArray())
+            }
+        }
+        return res
+    }
 
     /**
      * Деление
@@ -68,7 +134,13 @@ class Polynom(vararg coeffs: Double) {
      *
      * Если A / B = C и A % B = D, то A = B * C + D и степень D меньше степени B
      */
-    operator fun div(other: Polynom): Polynom = TODO()
+    operator fun div(other: Polynom): Polynom {
+        if (this.degree() < other.degree()) return Polynom(0.0)
+        for (i in 0..this.degree() - other.degree()) {
+
+        }
+        return Polynom()
+    }
 
     /**
      * Взятие остатка
@@ -78,10 +150,36 @@ class Polynom(vararg coeffs: Double) {
     /**
      * Сравнение на равенство
      */
-    override fun equals(other: Any?): Boolean = TODO()
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        var answer = true
+        if (other is Polynom) {
+            val min = minOf(other.degree(), list.lastIndex)
+            for (i in 0..min) {
+                if (other.coeff(i) != this.coeff(i)) answer = false
+                if (min == other.degree() && other.degree() != list.lastIndex) {
+                    for (z in min + 1..this.degree()) {
+                        if (this.coeff(z) != 0.0) answer = false
+                    }
+                } else if (other.degree() != list.lastIndex) {
+                    for (y in min + 1..other.degree()) {
+                        if (other.coeff(y) != 0.0) answer = false
+                    }
+                }
+            }
+        } else return false
+        return answer
+    }
 
     /**
      * Получение хеш-кода
      */
-    override fun hashCode(): Int = TODO()
+    override fun hashCode(): Int {
+        var result = coeffs.contentHashCode()
+        result = 31 * result + list.hashCode()
+        return result
+    }
+
 }
+
+
