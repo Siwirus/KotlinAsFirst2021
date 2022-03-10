@@ -98,33 +98,21 @@ class Polynom(private vararg val coeffs: Double) {
         val min = minOf(other.degree(), list.lastIndex)
         val otherCoeffs = other.coeffs.toList()
 
-
-        if (min == list.lastIndex) {
-            for (i in 0..min) {
-                var x = i
-                listOfCalculations = mutableListOf()
-                listOfCalculations += otherCoeffs.map { it * list.reversed()[i] }
-                while (x > 0) {
-                    listOfCalculations += 0.0
-                    x -= 1
-                }
-                res += Polynom(*listOfCalculations.toDoubleArray())
+        for (i in 0..min) {
+            var x = i
+            listOfCalculations = mutableListOf()
+            listOfCalculations += (if (min == list.lastIndex) otherCoeffs.map { it * list.reversed()[i] }
+            else list.map { it * otherCoeffs.reversed()[i] })
+            while (x > 0) {
+                listOfCalculations += 0.0
+                x -= 1
             }
-
-        } else {
-            for (i in 0..min) {
-                var x = i
-                listOfCalculations = mutableListOf()
-                listOfCalculations += list.map { it * otherCoeffs.reversed()[i] }
-                while (x > 0) {
-                    listOfCalculations += 0.0
-                    x -= 1
-                }
-                res += Polynom(*listOfCalculations.toDoubleArray())
-            }
+            res += Polynom(*listOfCalculations.toDoubleArray())
         }
         return res
+
     }
+
 
     /**
      * Деление
